@@ -1,7 +1,7 @@
-# Final Project for Data Structure Course, Informatika, ITS
+> [!IMPORTANT]
+> Kode dan dokumen dalam _repo_ ini dikumpulkan pada **27 Mei 2020** sebagai tugas akhir mata kuliah Struktur Data. Oleh karena itu, _repo_ ini mungkin tidak relevan dengan kondisi penulis saat ini.
 
-> [!NOTE]
-> Kode dan dokumen dalam _repo_ ini dikumpulkan pada 27 Mei 2020 sebagai tugas akhir mata kuliah Struktur Data. Oleh karena itu, _repo_ ini mungkin tidak relevan dengan kondisi penulis saat ini.
+# Final Project for Data Structure Course, Informatika, ITS
 
 > [!NOTE]
 > Dokumen ini diambil secara langsung dari dokumen [reports.pdf](reports.pdf).
@@ -18,7 +18,7 @@ Sistem pelacakan dan penelusuran ini menganalisis hubungan atau kontak seseorang
 
 Selain itu pencarian orang atau tempat membutuhkan waktu cepat dan tidak perlu melakukan penelusuran satu-persatu. Untuk menyiasati hal ini, daftar orang dan tempat dimasukkan dalam tabel _hash_ yang dapat diakses dengan waktu singkat menggunakan fungsi _hash_.
 
-Struktur graf akan terdiri dari 2 _array_ yang menyimpan tabel _hash_ dari daftar oreng dan tempat. **input** yang dimasukkan pada sistem adalah 16 digit nomor KTP untuk orang dan nama tempat untuk tempat.
+Struktur graf akan terdiri dari 2 _array_ yang menyimpan tabel _hash_ dari daftar oreng dan tempat. _Input_ yang dimasukkan pada sistem adalah 16 digit nomor KTP untuk orang dan nama tempat untuk tempat.
 
 ![Visualisasi hubungan orang dan tempat](images/image1.png)
 
@@ -29,7 +29,7 @@ Tanggal lahir dipilih karena lebih mudah (walau terdapat _birthday paradox_) dar
 Untuk **input** nama tempat, digunakan rumus Horner pada setiap karakter pada nama tempat:
 
 ```math
-H(s) = \sum_{i=0}^n s[i]\dot x^i
+H(s) = \sum_{i=0}^n s[i] \cdot x^i
 ```
 
 Kemudian hasil dari metode Horner tadi dibagi 265 yang merupakan ukuran tabel _hash_ dan diambil sisa hasil baginya sebagai _hash value_. _Collision resolution_ pada _hash table_ menggunakan _chaining_ sehingga bentuk _hash table_ adalah _array of list_. Sebelum dikembalikan, hasil _hash_ value ditambah 1 digit 0 atau 1 di belakangnya. Hal ini untuk membedakan hasil _hash_ value dari tempat dan orang. Penambahan digit 0 untuk menandakan tempat dan penambahan digit 1 untuk menandakan orang. Kembali pada struktur graf, untuk menyimpan _edge_ dibuat objek `Place` dan `Person`. Objek Place akan memiliki _member_ `edgePerson` yang menyimpan semua _edge_ dengan objek `Person`.
@@ -52,7 +52,7 @@ Objek `Person` akan memiliki member `edgePerson` yang menyimpan _edge_ dengan ob
 | `help`                    | Menampilkan bantuan                           |
 | `exit`                    | Keluar dari program                           |
 
-Masing-masing perintah diimplementasi dengan fungsi-fungsi tertentu yang digunakan sesuai **input** pada fungsi utama. Setiap fungsi juga akan mengecek validitas dan jenis **input** untuk _error handling_.
+Masing-masing perintah diimplementasi dengan fungsi-fungsi tertentu yang digunakan sesuai **input** pada fungsi utama. Setiap fungsi juga akan mengecek validitas dan jenis *input* untuk _error handling_.
 
 ## Desain dan Algoritma
 
@@ -68,13 +68,13 @@ Fungsi ini bertujuan menambah objek tempat atau orang pada graf. Algoritma:
 Fungsi ini bertujuan menghapus objek tempat atau orang dari graf. Fungsi ini juga akan otomatis menghapus semua _edge_ yang terhubung dengan objek yang akan dihapus. Algoritma:
 
 1. Cek _input_ melalui hasil _hash_
-   2a. Jika _input_ adalah tempat
-   a. Hapus _input_ dari `edgePlace` semua objek `Person`
-   b. Hapus objek _input_ dari graf
-   2b. Jika _input_ adalah orang
-   a. Hapus _input_ dari `edgePerson` objek `Person` lainnya
-   b. Hapus _input_ dari `edgePlace` semua objek `Place`
-   c. Hapus objek _input_ dari graf
+2. Jika _input_ adalah tempat:
+   1. Hapus _input_ dari `edgePlace` semua objek `Person`
+   2. Hapus objek _input_ dari graf
+3. Jika _input_ adalah orang
+   1. Hapus _input_ dari `edgePerson` objek `Person` lainnya
+   2. Hapus _input_ dari `edgePlace` semua objek `Place`
+   3. Hapus objek _input_ dari graf
 
 ### Fungsi `info`
 
@@ -88,36 +88,36 @@ Fungsi ini bertujuan menampilkan informasi objek tempat atau orang. Informasi da
 Fungsi ini bertujuan menambah _edge_/koneksi objek orang dengan tempat atau orang. Fungsi memiliki 2 _input_. _Input_ pertama adalah orang dan _input_ kedua adalah orang atau tempat. Algoritma:
 
 1. Cek _input_ kedua melalui hasil _hash_
-   2a. Jika _input_ kedua adalah tempat
-   a. Tambahkan _input_ pertama pada `edgePerson` _input_ kedua
-   b. Tambahkan _input_ kedua pada `edgePlace` _input_ pertama
-   c. Jika status _input_ pertama “CONFIRMED”, status _input_ kedua menjadi “INFECTED”
-   d. Jika status _input_ kedua “INFECTED” dan status _input_ pertama bukan “CONFIRMED”, status _input_ pertama menjadi “OBSERVED”
-   2b. Jika _input_ kedua adalah orang
-   a. Tambahkan _input_ pertama pada `edgePerson` _input_ kedua
-   b. Tambahkan _input_ kedua pada `edgePerson` _input_ pertama
-   c. Jika status _input_ pertama “CONFIRMED” dan status _input_ kedua bukan “CONFIRMED”, status _input_ kedua menjadi “OBSERVED”
-   d. Jika status _input_ kedua “CONFIRMED” dan status _input_ pertama bukan “CONFIRMED”, status _input_ pertama menjadi “OBSERVED”
+2. Jika _input_ kedua adalah tempat
+   1. Tambahkan _input_ pertama pada `edgePerson` _input_ kedua
+   2. Tambahkan _input_ kedua pada `edgePlace` _input_ pertama
+   3. Jika status _input_ pertama “CONFIRMED”, status _input_ kedua menjadi “INFECTED”
+   4. Jika status _input_ kedua “INFECTED” dan status _input_ pertama bukan “CONFIRMED”, status _input_ pertama menjadi “OBSERVED”
+3. Jika _input_ kedua adalah orang
+   1. Tambahkan _input_ pertama pada `edgePerson` _input_ kedua
+   2. Tambahkan _input_ kedua pada `edgePerson` _input_ pertama
+   3. Jika status _input_ pertama “CONFIRMED” dan status _input_ kedua bukan “CONFIRMED”, status _input_ kedua menjadi “OBSERVED”
+   4. Jika status _input_ kedua “CONFIRMED” dan status _input_ pertama bukan “CONFIRMED”, status _input_ pertama menjadi “OBSERVED”
 
 ### Fungsi `deleteEdge`
 
 Fungsi ini bertujuan menghapus _edge_/koneksi objek orang dengan objek tempat atau orang dari graf. Fungsi memiliki 2 _input_. _input_ pertama adalah orang dan _input_ kedua adalah orang atau tempat. Algoritma:
 
 1. Cek _input_ kedua melalui hasil _hash_
-   2a. Jika _input_ kedua adalah tempat
-   a. Hapus _input_ pertama dari `edgePerson` _input_ kedua
-   b. Hapus _input_ kedua dari `edgePlace` _input_ pertama
-   2b. Jika _input_ kedua adalah orang
-   a. Hapus _input_ pertama dari `edgePerson` _input_ kedua
-   b. Hapus _input_ kedua dari `edgePerson` _input_ pertama
+2. Jika _input_ kedua adalah tempat
+   1. Hapus _input_ pertama dari `edgePerson` _input_ kedua
+   2. Hapus _input_ kedua dari `edgePlace` _input_ pertama
+3. Jika _input_ kedua adalah orang
+   1. Hapus _input_ pertama dari `edgePerson` _input_ kedua
+   2. Hapus _input_ kedua dari `edgePerson` _input_ pertama
 
 ### Fungsi `show`
 
 Fungsi ini bertujuan menampilkan daftar orang atau tempat yang ada pada graf. Fungsi ini menerima _input_ “person” atau “place”. Algoritma:
 
 1. Cek _input_
-   2a. Jika _input_ adalah “place”, tampilkan semua objek `Place` dalam graf
-   2b. Jika _input_ adalah “person”, tampilkan semua objek `Person` dalam graf
+2. Jika _input_ adalah “place”, tampilkan semua objek `Place` dalam graf
+3. Jika _input_ adalah “person”, tampilkan semua objek `Person` dalam graf
 
 ### Fungsi `confirm`
 
@@ -125,8 +125,8 @@ Fungsi ini bertujuan mengonfirmasi orang terkena virus. Lalu, fungsi ini akan me
 
 1. Mengubah status _input_ menjadi “CONFIRMED”
 2. Mengiterasi `edgePlace` pada _input_
-   a. Mengubah semua status orang pada `edgePerson` dari tempat menjadi “OBSERVED”
-   b. Mengubah status tempat menjadi “INFECTED”
+   1. Mengubah semua status orang pada `edgePerson` dari tempat menjadi “OBSERVED”
+   2. Mengubah status tempat menjadi “INFECTED”
 3. Mengubah semua status orang pada `edgePerson` pada _input_ menjadi “OBSERVED”
 
 ### Fungsi `normal`
